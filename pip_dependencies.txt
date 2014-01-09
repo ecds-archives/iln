@@ -1,0 +1,8 @@
+django==1.5.1
+python-dateutil
+soaplib==0.8.1
+rdflib>=3.0
+ply
+-e git://github.com/emory-libraries/eulxml.git#egg=eulxml
+-e git://github.com/emory-libraries/eulexistdb.git#egg=eulexistdb
+-e git://github.com/emory-libraries/eulcommon.git#egg=eulcommon
