@@ -1,0 +1,154 @@
+body { background:#FFFFFF; color:#333333; font-family:Arial; }
+
+
+div.heading {	position: relative; 
+	  	top: 1em;
+		left: 5cm; 
+		text-align: left;
+		width: 60%;
+		z-index: 4; 
+	        background: rgb(255,255,255)
+	    }
+div.sidebar {	position: fixed; 
+		top: 1.5cm; 
+		left: 2em; 
+		width: 10%; 
+		height: 80%; 
+		z-index: 3;
+ 	    }
+div.content {	position: relative; 
+		left: 4cm; 
+		width: 70%;
+		top: 1.5cm; 
+		z-index: 1;
+		overflow: visible;
+/*		border-top: double medium black;*/
+	    }
+div.footing {	position: relative;
+		bottom: -4cm;
+		left: 5cm; 
+		width: 50%;
+		margin-left: 5%;
+		margin-right: 5%;
+		z-index: 2;
+	        background: rgb(255,255,255);
+		border-top: double medium black;
+	    }
+div.right { text-align: right;
+	 } 
+
+p.head  { text-align: center;
+	  font-family: Arial;
+	  color: black
+	}
+
+p.left  { text-align: left;
+    	}
+
+p.error {  font-size: 125%; color: red }
+
+/* Display all image captions in small caps (as in original) */
+p.caption { font-variant: small-caps; }
+
+h1 { font-family: Arial;
+    text-align: center;
+    font-variant: small-caps;}
+
+h2 { color: black; 
+     font-family: Arial; 
+     font-size: 1.5em;
+     font-weight: normal;
+     text-align: center;
+     border-bottom: double medium black;
+   }
+
+a	  { text-decoration:underline; font-family:Arial }
+a:link 	  { color:#333333 }
+a:visited { color:#666666 } 
+a:active  { color:#333333 }
+a:hover   { }
+
+
+tr.label td { font-weight: bold; text-decoration: underline }
+td.label { font-weight: bold; }
+td.figure { text-align: center; vertical-align: top; padding-bottom: 1em; }
+td.title {padding-bottom: 1em;}
+td.num {text-align: right;}
+th.num {text-align: right;}
+
+img { border: 0 }
+a.toggle { text-decoration:none;margin:2px; }
+
+div.heading img { border-top: double medium black; padding: 15px 0.5in 0 0.5in;
+	vertical-align: middle;}
+
+span.term1 { background-color: #d1e1f9; font-weight: bold;}
+span.term2 { background-color: #fffc7f; font-weight: bold;}
+span.term3 { background-color: #b4f7aa; font-weight: bold;}
+span.match { font-weight:bold; background-color:#B5D5FF; }
+
+/* Horizontal lists -- display inline, with lines between */
+li.horiz { 
+     display:inline; 
+     padding-left: 7px;
+     padding-right: 7px;
+     border-left: 2px solid #666;
+  }
+/* (no left border on first item) */
+li.firsthoriz { 
+     display:inline; 
+     padding-left: 7px;
+     padding-right: 7px;
+     border-left: none;
+  }
+
+/* Render small caps */
+span.smallcaps { font-variant: small-caps; }
+
+/* render text to the right */
+div.right {text-align: right;}
+
+/* render superscripts */
+span.superscript {vertical-align: super;
+		 font-size: smaller;}
+/* page breaks */
+hr.pb {width: 5em;
+      }
+
+table.searchresults { width:90%;  border-collapse: collapse;}
+table.searchresults td { border-bottom: 1px solid #cccccc;}
+table.searchresults td.count { width:15%; text-align: center; }
+
+/* next/prev/etc. navigation */
+div.searchnav {
+  background:#cccccc; 
+  margin-bottom:10px; 
+  height:20px;
+  text-align:center;
+}
+/* for first/next/last links spacing to be consistent,
+   all links should always be present with no link text if there is no url */
+div.searchnav a, table.searchnav a {
+  color:#000000; 
+  line-height:20px;
+  padding-left:20px;
+  padding-right:20px;
+  text-align:center;
+}
+div.searchnav a:hover, table.searchnav a:hover {
+  color: #666666;
+}
+
+table.searchnav { 
+  background:#cccccc; 
+  margin-bottom:10px; 
+  height:20px;
+  text-align:center;
+  width:100%;
+  clear:both;
+}
+table.searchnav td { 
+  width:25%; 
+}
+
+form#jumpnav { float:right; }

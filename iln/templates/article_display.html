@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Browse - Article{% endblock %}
+
+{% block content %}
+
+{% if div %}
+  {{ body|safe }}
+{% else %}
+  <p>No div</p>
+{% endif %}
+
+<div class="content">
+  <table width="100%">
+  <tr><th>Previous: </th><td><a href={% url "article_display" div.prevdiv_id %}>{{div.prevdiv_title}}</a></td><td>{{div.prevdiv_type}}</td><td
+  valign="top"><font size="-1">{{div.prevdiv_vol}},
+  {{div.prevdiv_issue}}, {{div.prevdiv_pages}} ({{div.prevdiv_extent}})</font></td></tr>
+  <tr><th>Next: </th><td><a href={% url "article_display" div.nextdiv_id %}>{{div.nextdiv_title}}</a></td><td>{{div.nextdiv_type}}</td><td
+  valign="top"><font size="-1">{{div.nextdiv_vol}}, {{div.nextdiv_issue}}, {{div.nextdiv_pages}} ({{div.nextdiv_extent}})</font></td></tr> 
+  <tr><th>Article List for: </th><td><a href="volume.php?id=iln38.001">{{div.volume_title}}</a></td><td/></tr></table>
+
+
+<h2>Search Entire Text</h2>
+
+<form name="ilnquery" action={% url "searchform" %} method="get">
+<table class="searchform" border="0">
+<tr><th>Keyword</th><td class="input"><input type="text" size="40" name="keyword"></td></tr>
+<tr><th>Title</th><td class="input"><input type="text" size="40" name="title"></td></tr>
+<tr><th>Article Date</th><td class="input"><input type="text" size="40" name="article_date"></td></tr>
+<tr><td></td><td><input type="submit" value="Submit"> <input type="reset" value="Reset"></td></tr>
+</table>
+</form>
+
+</div>
+
+
+{% endblock %}

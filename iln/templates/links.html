@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Links{% endblock %}
+
+{% block content %}
+
+<div class='content'>
+<h2>Links</h2>
+
+{% if body %}
+  {{body|safe}}
+{% else %}
+  None Found.
+{% endif %}
+
+</div>
+  
+{% endblock %}

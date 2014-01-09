@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}About This Site{% endblock %}
+
+{% block content %}
+
+<div class="content">
+<h2>About This Site</h2>
+<h3>Copyright</h3>
+               <p>&#x00A9;2000 Emory University.  Permission is granted to
+               download, transmit, or otherwise reproduce, distribute
+               or display the contributions to the work claimed by
+               Emory University for non-profit educational purposes,
+               provided that the site is credited: Courtesy of "The
+               Civil War in America from the <i>Illustrated London
+               News</i>": A Joint Project by Sandra J. Still,
+               Emily E. Katt, Collection Management, and the Beck
+               Center of Emory University.</p> <p>For inquiries about
+               commercial uses, contact the Lewis H. Beck Center,
+               Woodruff Library, Emory University, Atlanta, Georgia
+               30322. <script language="javascript">
+<!--
+var username = "beckctr";
+var hostname = "emory.edu";
+var linktext = "Contact the Beck Center";
+document.write("<a href=" + "mail" + "to:" + username +
+"@" + hostname + ">" + linktext + "</a>")
+//-->
+</script>
+<noscript>Contact the Beck Center: beckctr<img src="{{STATIC_URL}}images/at.gif"
+alt=" at "/>emory.edu</noscript></p>
+<h3>Credits</h3>
+<p>In addition to the contributions of the editors, Sandra Still and
+Emily Katt, many members of the staff of the Beck Center have
+contributed to this project, digitizing, proofreading, encoding, spell
+checking and designing the site. Thanks are also due to the staff of
+the Manuscript, Archives, and Rare Book Library for support in copying
+the articles for digitizing.</p>
+<ul>
+<li>Project Managers: Chuck Spornick, Alice Hickcox</li>
+<li>Site Design: Katherine Ellison</li>
+<li>Programming Support: Rebecca Sutton Koeser, Tavishi Bhasin</li>
+<li>Image Capture: Jeff Massey and Sandra Still</li>
+<li>Digitizing, proofing and encoding: Scott Ellis, Britney Cooper,
+Stacy Brook, Robin Conner, Brendan Corcoran, Ahmed Abdel Meguid, Sprice Dean</li>
+</ul>
+
+<h3>Digitization Details</h3>
+<p>The images were captured using the library's Phase One PowerPhase
+FX camera. The images are stored as 300 dpi tiffs, and displayed as
+jpeg images and gif thumbnails.</p>
+<p>The text is stored in an eXist database, and retrieved using
+queries managed by PHP, XSLT and CSS. The site is harvested by an OAI
+harvester to produce Dublin Core records for each article.</p>
+
+</div>
+
+
+
+{% endblock %}

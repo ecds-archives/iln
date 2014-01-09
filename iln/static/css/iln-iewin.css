@@ -1,0 +1,23 @@
+@import "iln.css";
+
+/* Note: 'position: fixed' is not supported in IE on Windows;
+   Overriding default iln div position settings.  */
+
+/* Only these settings need to be changed; using other settings from iln.css */
+div.sidebar {	float: left;
+		position: absolute;
+		z-index: 4
+ 	    }
+
+/* These settings are necessary so the footer will play nicely. */
+div.content { 	margin-bottom: 2cm;
+		height: 60%;
+	     }
+
+div.footing {   position: relative;
+		width: 60%;
+	        z-index: 2;
+	        background: rgb(255,255,255)
+		text-align: center;
+		bottom: 1px;
+	    }

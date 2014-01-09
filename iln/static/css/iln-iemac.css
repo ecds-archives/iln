@@ -1,0 +1,40 @@
+@import "iln.css";
+
+/* ILN css file for Internet Explorer on Macintosh
+   Positioning works differently in IE, so over-riding div settings.
+ */
+ 
+
+div.heading {	position: absolute; 
+	  	top: 4px;
+		left: 2.5cm;
+		text-align: center;
+		width: 80%;
+		z-index: 2; 
+	    }
+div.sidebar {	float: left;
+		top: 1.5cm;
+		position: fixed;
+		left: 10px;
+		z-index: 4
+ 	    }
+div.content {	position: absolute; 
+		left: 4cm; 
+		padding-bottom: 3cm;
+		width: 70%;
+		top: 4.5cm; 
+		z-index: 1;
+		overflow: visible
+	    }
+div.footing {	position: fixed;
+		bottom: -0.2cm;
+		left: 2.5cm;
+		text-align: center;
+		vertical-align: bottom;
+		height: 2cm;
+		width: 80%;
+		z-index: 3;
+		overflow: visible;
+	        background: rgb(255,255,255)
+	    }
+

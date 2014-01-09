@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+
+<div class="content">
+
+<h2>Search Results</h2>
+
+ <p><b>Search results for texts where:</b></p>
+ <ul class='searchopts'>
+  {% if keyword %} 
+  <li>document contains keyword(s) '{{keyword}}'</li>
+  {% endif %}
+  {% if title %}
+    <li>title matches '{{title}}'</li>
+  {% endif %}
+  {% if article_date %}
+    <li>date matches '{{article_date}}'</li>
+  {% endif %}
+ </ul>
+
+{% if searchform.is_valid %}
+
+{% if articles_paginated.paginator.count == 0 %}
+ <p><b>No matches found.</b>
+You may want to broaden your search or consult the search tips for
+  suggestions.</p>
+{% endif %}
+ 
+<table class="searchnav">
+<tbody>
+  <tr>
+    <td></td>
+    <td></td>
+    <td><a>Next></a></td>
+    <td><a>Last>></a></td>
+  </tr>
+ </tbody>
+</table>
+
+<form id="jumpnav" action={% url "searchform"><input name="keyword" type="hidden" value="red"/><input name="title" type="hidden" value=""/><input name="article_date" type="hidden" value=""/><input name="max" type="hidden" value="20"/><select name="position" onchange="submit();"><option xmlns:tei="http://www.tei-c.org/ns/1.0" value="1" selected="selected">1 - 20</option><option xmlns:tei="http://www.tei-c.org/ns/1.0" value="21">21 - 40</option><option xmlns:tei="http://www.tei-c.org/ns/1.0" value="41">41 - 60</option><option xmlns:tei="http://www.tei-c.org/ns/1.0" value="61">61 - 66</option></select></form>
+
+<p>{{ articles_paginated.paginator.count }} matches found</p>
+<p>Click on the title to view the whole article.</p>
+
+{% for article in articles_paginated.object_list %}
+<table class="browse"><thead style="font-size:small;"><tr><th class="hits">Score</th><th class="num">#</th></tr></thead><tbody align="left" valign="top" style="font-size:small;"><tr xmlns:tei="http://www.tei-c.org/ns/1.0" class="item"><td class="hits">1.8662646</td> 
+<td class="num" width="4%">1.</td> 
+<td class="title">
+	<a href="{% url "article_display" article.id %}">{{article.head}}</a><br/><font size="-1">{{article.vol}},
+  {{article.issue}}, {{article.pages}}. {{article.date}} 
+      </td>
+</table>
+{% endfor %}
+
+
+
+{% endif %}
+
+
+ 
+</div>
+
+{% endblock %}

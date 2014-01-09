@@ -1,0 +1,14 @@
+
+/* careful: use class names, so any other ILN lists will still show up */
+ul.contents { display: none }
+li.contents { list-style-type: none;
+     margin-left: 0px;
+     margin-top:  5px;
+     margin-bottom: 5px;
+   }
+/* div2s which contain figures : first line is further left because they have a toggle image */ 
+li.container { 
+   text-indent: -15px; 
+   list-style-type: none;
+}
+

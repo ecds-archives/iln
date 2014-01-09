@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block head-extras %}{% include "content_head.html" %}{% endblock %}
+
+
+{% block title %}Browse - Volumes{% endblock %}
+
+{% block content %}
+
+<div class="content">
+
+<h2>Volumes</h2><?xml version="1.0"?>
+<body><noscript><i>Note: This site works best with Javascript enabled.</i><style type="text/css">
+	ul.contents { display: block } 
+        img.javascript { display: none }
+      </style></noscript>
+
+
+{% for volume in volumes %}
+  <p><a href={% url "volume_display" volume.id %}>{{volume.head}}</a><font size="-1">
+      - {{volume.docDate}}
+     - ({% for key, value in div_count_dict.items %}{% if key == volume.id %}{{value}}{% endif %}{% endfor %} Articles,  {% for key, value in fig_count_dict.items %}{% if key == volume.id %}{{value}}{% endif %}{% endfor %} Illustrations)
+    </font></p></body>
+{% endfor %}
+
+<h2>Search Entire Text</h2>
+
+<form name="ilnquery" action={% url "searchform" %} method="get">
+<table class="searchform" border="0">
+<tr><th>Keyword</th><td class="input"><input type="text" size="40" name="keyword"></td></tr>
+<tr><th>Title</th><td class="input"><input type="text" size="40" name="title"></td></tr>
+<tr><th>Article Date</th><td class="input"><input type="text" size="40" name="article_date"></td></tr>
+<tr><td></td><td><input type="submit" value="Submit"> <input type="reset" value="Reset"></td></tr>
+</table>
+</form>
+  
+</div>
+  
+{% endblock %}

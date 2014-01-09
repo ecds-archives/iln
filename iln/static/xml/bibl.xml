@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<biblCollection ino:id="1" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:ino="http://namespaces.softwareag.com/tamino/response2">
+  <subjectList>
+    <dc:subject>United States--History--Civil War, 1861-1865.</dc:subject>
+    <dc:subject>United States--History--Civil War, 1861-1865--Foreign Public Opinion.</dc:subject>
+    <dc:subject>Illustrated London News</dc:subject>
+    </subjectList>
+
+  <biblRecord id="2005-02-09%Rebecca Sutton Koeser">
+        <dc:title>The Civil War Images of Mathew Brady : in the wake of battle</dc:title>
+        <dc:date>2004</dc:date>
+	<dc:creator>Sullivan, George E</dc:creator>
+	<dc:publisher>Prestel</dc:publisher>
+        <dc:description>445 p. : numerous photos ; 15 x 20 cm</dc:description>
+        <dc:identifier>ISBN: 3791329294</dc:identifier>
+        <dc:contributor>Rebecca Sutton Koeser</dc:contributor>
+        <dc:subject>United States--History--Civil War, 1861-1865.</dc:subject>
+  </biblRecord>
+  <biblRecord>
+  <dc:title>The American Civil War</dc:title>
+  <dc:date>2007</dc:date>
+    <dc:creator>Smith, Adam I. P</dc:creator>
+    <dc:publisher>Palgrave Macmillan</dc:publisher>
+    <dc:description>xxii, 275 p. : ill., maps ; 23 cm.</dc:description>
+    <dc:identifier>ISBN: 9780333790533</dc:identifier>
+    <dc:subject>United States--History--Civil War, 1861-1865.</dc:subject>
+  </biblRecord>
+  
+  <biblRecord>
+    <dc:title>The American Civil War and the British Press</dc:title>
+    <dc:date>2000</dc:date>
+    <dc:creator>Grant, Alfred</dc:creator>
+    <dc:publisher>McFarland &amp; Co.</dc:publisher>
+    <dc:description>viii, 197 p. ; 24 cm.</dc:description>
+    <dc:identifier>ISBN: 0786406305</dc:identifier>
+    <dc:subject>War--Press coverage--Great Britain--History--19th century.</dc:subject>
+  </biblRecord>
+  
+  <biblRecord>
+    <dc:title>The War Illustrators</dc:title>
+    <dc:date>1977</dc:date>
+    <dc:creator>Hodgson, Pat</dc:creator>
+    <dc:publisher>Macmillan</dc:publisher>
+    <dc:description>191 p. : ill. ; 26 cm.</dc:description>
+    <dc:identifier>ISBN: 0025520008</dc:identifier>
+    <dc:subject>War in art.</dc:subject>
+  </biblRecord>
+  <biblRecord>
+    <dc:title>Vizetelly Covers the Confederacy</dc:title>
+    <dc:date>1957</dc:date>
+    <dc:creator>Hoole, William Stanley</dc:creator>
+    <dc:publisher>Confederate Pub. Co.</dc:publisher>
+    <dc:description>173 p. illus., port. 22 cm.</dc:description>
+    <dc:subject>United States--History--Civil War, 1861-1865--Journalists.</dc:subject>
+  </biblRecord>
+  <biblRecord>
+    <dc:title>The American Civil War, an English View</dc:title>
+    <dc:date>1964</dc:date>
+    <dc:creator>Wolseley, Garnet Wolseley, Viscount</dc:creator>
+    <dc:publisher>University of Virginia Press</dc:publisher>
+    <dc:description>xxxvii, 230 p. 24 cm.</dc:description>
+    <dc:subject>United States--History--Civil War, 1861-1865--Campaigns.</dc:subject>
+  </biblRecord>
+  <biblRecord>
+    <dc:title>The American Civil War, 1861-1865</dc:title>
+    <dc:date>2001</dc:date>
+    <dc:creator>Mitchell, Reid</dc:creator>
+    <dc:publisher>Longman</dc:publisher>
+    <dc:description>xix, 142 p. : ill., maps ; 24 cm.</dc:description>
+    <dc:identifier>ISBN: 0582319730</dc:identifier>
+    <dc:subject>United States--History--Civil War, 1861-1865.</dc:subject>
+  </biblRecord>
+
+  <biblRecord>
+    <dc:title>The American Civil War: Explorations and Reconsiderations</dc:title>
+    <dc:date>2000</dc:date>
+    <dc:creator>Grant, Susan-Mary</dc:creator>
+    <dc:creator>Reid, Brian Holden</dc:creator>
+    <dc:publisher>Longman</dc:publisher>
+    <dc:description>xxiv, 366 p.</dc:description>
+    <dc:identifier>ISBN: 0582318351</dc:identifier>
+    <dc:subject>United States--History--Civil War, 1861-1865.</dc:subject>
+  </biblRecord>
+  
+  <biblRecord>
+    <dc:title>The War for a Nation: the American Civil War</dc:title>
+    <dc:date>2006</dc:date>
+    <dc:creator>Grant, Susan-Mary</dc:creator>
+    <dc:publisher>Routledge</dc:publisher>
+    <dc:description>xiii, 261 p. : maps ; 24 cm.</dc:description>
+    <dc:identifier>ISBN: 0415979897</dc:identifier>
+    <dc:subject>United States--History--Civil War, 1861-1865.</dc:subject>
+  </biblRecord>
+  
+  <biblRecord>
+    <dc:title>They Were There: The Civil War in Action as Seen by Its Combat Artists</dc:title>
+    <dc:date>1959</dc:date>
+    <dc:creator>Stern, Philip Van Doren</dc:creator>
+    <dc:publisher>Crown Publishers</dc:publisher>
+    <dc:description>166 p. (chiefly illus.) 31 cm.</dc:description>
+    <dc:subject>United States--History--Civil War, 1861-1865--Pictorial works.</dc:subject>
+  </biblRecord>
+  
+  <biblRecord>
+    <dc:title>Lawley Covers the Confederacy</dc:title>
+    <dc:date>1964</dc:date>
+    <dc:creator>Hoole, William Stanley</dc:creator>
+    <dc:publisher>Confederate Pub. Co.</dc:publisher>
+    <dc:description>132 p. facsim., port. 22 cm.</dc:description>
+    <dc:subject>United States--History--Civil War, 1861-1865--Journalists.</dc:subject>
+  </biblRecord>
+  
+  <biblRecord>
+    <dc:title>Battle Cry of Freedom: The Civil War era</dc:title>
+    <dc:date>1988</dc:date>
+    <dc:creator>McPherson, James M</dc:creator>
+    <dc:publisher>Oxford University Press</dc:publisher>
+    <dc:description>xix, 904 p., [16] p. of plates : ill. ; 25 cm.</dc:description>
+    <dc:identifier>ISBN: 0195038630</dc:identifier>
+    <dc:subject>United States--History--Civil War, 1861-1865--Campaigns.</dc:subject>
+  </biblRecord>
+ 
+  <biblRecord>
+    <dc:title>The American Civil War</dc:title>
+    <dc:date>1974</dc:date>
+    <dc:creator>Parish, Peter J</dc:creator>
+    <dc:publisher>Holmes &amp; Meier Publishers</dc:publisher>
+    <dc:description>750 p. : ill.</dc:description>
+    <dc:identifier>ISBN: 0841901767</dc:identifier>
+    <dc:subject>United States--History--Civil War, 1861-1865.</dc:subject>
+  </biblRecord>
+
+  <biblRecord>
+    <dc:title>Dynamics of the Pictured Page: Representing the Nation in the Illustrated London News</dc:title>
+    <dc:date>1998</dc:date>
+    <dc:creator>Sinnema, Peter W</dc:creator>
+    <dc:publisher>Ashgate Pub.</dc:publisher>
+    <dc:description>219 p. : ill. ; 24 cm.</dc:description>
+    <dc:identifier>ISBN: 1840142626</dc:identifier>
+    <dc:subject>English periodicals--History--19th century.</dc:subject>
+  </biblRecord>
+  
+  <biblRecord>
+    <dc:title>Where My Heart Is Turning Ever: Civil War Stories and Constitutional Reform, 1861-1876</dc:title>
+    <dc:date>1992</dc:date>
+    <dc:creator>Diffley, Kathleen</dc:creator>
+    <dc:publisher>University of Georgia Press</dc:publisher>
+    <dc:description>xlvii, 236 p. : ill. ; 24 cm.</dc:description>
+    <dc:identifier>0820314455</dc:identifier>
+    <dc:subject>United States--History--Civil War, 1861-1865--Literature and the war.</dc:subject>
+    <dc:subject>Narration (Rhetoric)</dc:subject>
+    <dc:subject>War stories, American--History and criticism.</dc:subject>
+  </biblRecord>
+  
+  <biblRecord>
+    <dc:title>To Live and Die: Collected Stories of the Civil War, 1861-1876</dc:title>
+    <dc:date>2002</dc:date>
+    <dc:creator>Diffley, Kathleen</dc:creator>
+    <dc:publisher>Duke University Press</dc:publisher>
+    <dc:description>xiii, 429 p. : ill. ; 25 cm.</dc:description>
+    <dc:identifier>0822328879</dc:identifier>
+    <dc:subject>United States--History--Civil War, 1861-1865--Fiction.</dc:subject>
+    <dc:subject>War stories, American.</dc:subject>
+  </biblRecord>
+</biblCollection>

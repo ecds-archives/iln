@@ -1,0 +1,72 @@
+<html>
+ <head>
+ <title>{% block title %}{%endblock %} - The Civil War in America from The Illustrated London News</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="robots" content="index,follow">
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/iln.css">
+<script language="Javascript"
+ src="{{STATIC_URL}}image_viewer/launchViewer.js"></script>{% block head-extras %}{% endblock %}</head>
+<body>
+
+
+<div class="heading">
+<!-- note: this line image has been superceded by css border styles
+-->
+<!-- <p class="head"><img
+src="http://cti.library.emory.edu/iln/images/hline2.jpg" /></p> -->
+<p class="head"><a href={% url "index" %}>
+<img src="{{STATIC_URL}}images/finalheader.gif"
+     alt="The Illustrated London News" 
+     title="The Illustrated London News" width="363" height="77" /></a></p>
+<p class="head"><a href={% url "index" %}>Home</a>
+| <a href={% url "about" %}>About</a> 
+| <a href={% url "introduction" %}>Introduction</a> 
+| <a href={% url "bibliography" %}>Bibliography</a> 
+| <a href={% url "volumes" %} rel="contents">Articles</a> 
+| <a href={% url "illustrations" %}>Illustrations</a> 
+| <a href={% url "searchform" %}>Search</a> 
+| <a href={% url "links" %}>Links</a></p>
+</div>
+
+<div class="sidebar">
+  <img src="{{STATIC_URL}}images/manoutlne.jpg" 
+	alt="Man reading newspaper" title="Man reading newspaper"/>
+</div>
+
+{% block content %}{% endblock %}
+
+<div class="footing">
+<!-- <p class="head"><img src="http://cti.library.emory.edu/iln/images/hline2.jpg" 
+	width="417" height="3" /></p> -->
+<p class="head"><a href="http://web.library.emory.edu/">University Libraries</a> |
+<a href="http://beck.library.emory.edu/">Beck Center</a> | <script language="javascript">
+<!--
+var username = "beckctr";
+var hostname = "emory.edu";
+var linktext = "Contact the Beck Center";
+document.write("<a href=" + "mail" + "to:" + username +
+"@" + hostname + ">" + linktext + "</a>")
+//-->
+</script>
+<noscript>Contact the Beck Center: beckctr<img src="{{STATIC_URL}}images/at.gif"
+alt=" at "/>emory.edu</noscript> | 
+<a href="http://www.emory.edu">Emory University</a> <br />
+<font face="Book Antiqua" size="2" color="#000000"><i>A 
+          Joint Project by Sandra J. Still, Emily E. Katt, Collection Management, 
+          and the Beck Center.</i></font></p>
+<p class="head">
+<a href="http://www.tei-c.org/"><img src="http://www.tei-c.org/About/Badges/powered-by-TEI.png" alt="Powered by TEI" border="0"/></a>
+</p>
+</div>
+<div class="tracking">
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-11023816-6");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</div>
+
