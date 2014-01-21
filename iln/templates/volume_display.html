@@ -24,7 +24,9 @@
 {% endfor %}
 
 </body>  
-
+<p/>
+<p><b><a href={% url "volume_xml" volume.id %}>View XML for {{volume.head}}</a></b></p>
+     
 <h2>Search Entire Text</h2>
 
 <form name="ilnquery" action={% url "searchform" %} method="get">

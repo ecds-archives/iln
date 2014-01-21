@@ -6,7 +6,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib import admin
 admin.autodiscover()
 
-from iln_app.views import index, introduction, bibliography, about, links, searchform, article_display, volumes, volume_display, illustrations
+from iln_app.views import index, introduction, bibliography, about, links, searchform, article_display, volumes, volume_display, illustrations, volume_xml
 
 urlpatterns = patterns('iln_app.views',
     url(r'^$', 'index', name='index'),
@@ -17,6 +17,7 @@ urlpatterns = patterns('iln_app.views',
     url(r'^search$', 'searchform', name='searchform'),
     url(r'^browse/(?P<div_id>[^/]+)/$', 'article_display', name='article_display'),
     url(r'^volume/(?P<vol_id>[^/]+)/$', 'volume_display', name='volume_display'),
+    url(r'^volume/(?P<vol_id>[^/]+)/xml$', 'volume_xml', name='volume_xml'),
     url(r'^volumes$', 'volumes', name='volumes'),
     url(r'^illustrations$', 'illustrations', name='illustrations'),
     )

@@ -116,9 +116,18 @@ def volumes(request):
   return render_to_response('volumes.html', {'volumes': volumes, 'div_count_dict': div_count_dict, 'fig_count_dict': fig_count_dict}, context_instance=RequestContext(request))
 
 def volume_display(request, vol_id):
-  "Display the contents of a single issue."
+  "Display the contents of a single volume."
   volume = Volume.objects.get(id__exact=vol_id)
   return render_to_response('volume_display.html', {'volume': volume,}, context_instance=RequestContext(request))
+
+def volume_xml(request, vol_id):
+  "Display the xml of a single volume."
+  try:
+    doc = Volume.objects.get(id__exact=vol_id)
+  except:
+    raise Http404
+  tei_xml = doc.serializeDocument(pretty=True)
+  return HttpResponse(tei_xml, mimetype='application/xml')
 
 def illustrations(request):
   volumes = Volume_List.objects.only('id', 'head', 'docDate', 'divs', 'figs').order_by('id')
@@ -135,8 +144,13 @@ def illustrations(request):
     for fig in volume.figs:
       figname = str(fig.url).rstrip(".jpg")
       fighead = fig.head
+      #These next four variable are not functional.  Trying to pull volume-level but this links to the wrong model.  
+      figvol = fig.vol
+      figissue = fig.issue
+      figpage = fig.pages
+      figdate = fig.date
       fig_list.append(figname)
-      fig_url_dict[figname] = (volume.id, fighead)
+      fig_url_dict[figname] = (volume.id, fighead, figvol, figissue, figpage, figdate)
     fig_count = len(fig_list)
     fig_count_dict[volume.id] = (fig_count)
  

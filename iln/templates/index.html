@@ -147,7 +147,7 @@ onLoad="MM_preloadImages('{{STATIC_URL}}images/bib2.jpg','#1000487536200');MM_pr
     <tr> 
       <td valign="bottom" align="center" rowspan="2">
 <form name="ilnquery" 
-      action="search.php" method="get">
+      action={% url "searchform" %} method="get">
 <input type="text" size="15" name="keyword">
 
 <input type="submit" value="Search">

@@ -17,7 +17,7 @@
   {{div.prevdiv_issue}}, {{div.prevdiv_pages}} ({{div.prevdiv_extent}})</font></td></tr>
   <tr><th>Next: </th><td><a href={% url "article_display" div.nextdiv_id %}>{{div.nextdiv_title}}</a></td><td>{{div.nextdiv_type}}</td><td
   valign="top"><font size="-1">{{div.nextdiv_vol}}, {{div.nextdiv_issue}}, {{div.nextdiv_pages}} ({{div.nextdiv_extent}})</font></td></tr> 
-  <tr><th>Article List for: </th><td><a href="volume.php?id=iln38.001">{{div.volume_title}}</a></td><td/></tr></table>
+  <tr><th>Article List for: </th><td><a href={% url "volume_display" div.volume_id %}>{{div.volume_title}}</a></td><td/></tr></table>
 
 
 <h2>Search Entire Text</h2>
