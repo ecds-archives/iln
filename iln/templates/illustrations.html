@@ -3,9 +3,6 @@
 
 {% block title %}Browse - Illustrations{% endblock %}
 
-
-
-
 {% block content %}
 
 <div class="content">
@@ -16,35 +13,41 @@
         img.javascript { display: none }
       </style><p>Because you do not have Javascript running, you may prefer to browse <a href="volume.php" rel="alternate">volumes</a> separately.</p></noscript>
 
+<!--Testing the relationship between the figure and article models. -->
+<!--Separate queries for volumes and figures-->
+{% for figure in figures %}
+  {{figure.div_data}}
+{% endfor %}
+<!--Test silently fails.  Does not return of 'None.')-->
+
+<!--Testing the relationship between the figure and volume models-->
+<!--Separate queries for volumes and figures-->
+{% for figure in figures %}
+  {{figure.vol_id}}
+{% endfor %}
+<!--Test silently fails.  Does not return of 'None.')-->
+
   
+<!--Rest of template-->  
 {% for volume in volumes %}
   <p>{{volume.head}}</a><font size="-1">
       - {{volume.docDate}}
-     - ({% for key, value in fig_count_dict.items %}{% if key == volume.id %}{{value}}{% endif %}{% endfor %} Illustrations)</font></p>
+     - ({{volume.figs|length}} Illustrations)</font></p>
 
   <table>
-  {% for key, values in fig_url_dict.items %}
-  {% if values.0 == volume.id %}
+  {% for figure in figures %}
+  {% if figure.vol_id == volume.id %}
   <tr><td class="figure"><img
   src="http://beck.library.emory.edu/iln/image-content/ILN{{key}}.gif"
   alt="view image"
-  title="{{values.1}}"/><b>{{values.1}}</b><lb><p>{{values.2}},
-  {{values.3}}, {{values.4}}, {{values.5}}</p>{% endif %}{% endfor %}</td></tr>
+  title="{{fig_name}}"/><b>{{figure.head}}</b><lb><p>{{div_data}}</p>{% endif %}{% endfor %}</td></tr>
 
 </table>
 </ul>
  </body>
 {% endfor %}
 
-<h2>Search Illustrations</h2>
-
-<form name="ilnquery" action={% url "searchform" %} method="get">
-<table class="searchform" border="0">
-<tr><th>Keyword</th><td class="input"><input type="text" size="40" name="keyword"></td></tr>
-<tr><th>Illustration Date</th><td class="input"><input type="text" size="40" name="article_date"></td></tr>
-<tr><td></td><td><input type="submit" value="Submit"> <input type="reset" value="Reset"></td></tr>
-</table>
-</form>
+{% include "search_illustrations.html" %} 
   
 </div>
   

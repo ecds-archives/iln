@@ -20,7 +20,21 @@
 {% for article in volume.divs %}
      <li class="contents"><a href={% url "article_display" article.id %}>{{ article.head }}</a><font size="-1"> - {{ article.type }} -
      {{ article.date }} - ({{ article.extent }})</font></li>
-     </tr></p>
+     {% if article.type == "Illustration" %}
+     <ul>
+       <table>
+	 <tbody>
+	   <tr>
+	     <td class="figure">
+	       <a href={% url "article_display" article.id
+     %}>IMAGE</a>
+	       </td>
+	       <td>
+		 <p class ="caption">
+		 {{article.img_head}}<br><font size="-1">{{article.vol}},
+     {{article.date}},
+     {{article.pages}}. {{article.date}}</font></p></td></tr></tbody></table></ul>
+     {% endif %}
 {% endfor %}
 
 </body>  

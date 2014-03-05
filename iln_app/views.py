@@ -10,7 +10,7 @@ from django.http import HttpResponse, Http404
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.template import RequestContext
 
-from iln_app.models import Volume_List, Volume, Article, Fields, Figure
+from iln_app.models import Volume_List, Volume, Article, Fields, Figure, InterpGroup
 from iln_app.forms import ArticleSearchForm, IllustrationSearchForm
 
 from eulxml.xmlmap.core import load_xmlobject_from_file
@@ -89,9 +89,16 @@ def searchform(request):
 
 def article_display(request, div_id):
   "Display the contents of a single article."
-  
+  if 'keyword' in request.GET:
+    search_terms = request.GET['keyword']
+    url_params = '?' + urlencode({'keyword': search_terms})
+    filter = {'highlight': search_terms}    
+  else:
+    url_params = ''
+    filter = {}
   try:
-    div = Article.objects.only("article", "prevdiv_id", "prevdiv_title", "prevdiv_vol", "prevdiv_issue", "prevdiv_pages", "prevdiv_extent", "prevdiv_type", "nextdiv_id", "nextdiv_title", "nextdiv_vol", "nextdiv_issue", "nextdiv_pages", "nextdiv_extent", "nextdiv_type", "volume_id", "volume_title").get(id=div_id)
+    return_fields = ['article', 'prevdiv_id', 'prevdiv_title', 'prevdiv_vol', 'prevdiv_issue', 'prevdiv_pages', 'prevdiv_extent', 'prevdiv_type', 'nextdiv_id', 'nextdiv_title', 'nextdiv_vol', 'nextdiv_issue', 'nextdiv_pages', 'nextdiv_extent', 'nextdiv_type', 'volume_id', 'volume_title', 'head', 'title', 'vol', 'issue', 'pages', 'date', 'identifier_ark', 'contributor', 'publisher', 'rights', 'issued_date', 'series']
+    div = Article.objects.only(*return_fields).filter(**filter).get(id=div_id)
     body = div.article.xsl_transform(filename=os.path.join(settings.BASE_DIR, '..', 'iln_app', 'xslt', 'article.xsl'))
     return render_to_response('article_display.html', {'div': div, 'body' : body.serialize()}, context_instance=RequestContext(request))
   except DoesNotExist:
@@ -104,14 +111,11 @@ def volumes(request):
   for volume in volumes:
     div_list = []
     fig_list = []
-    for div in volume.divs:
-      div_list.append("n")
-    div_count = len(div_list)
+    div_count = len(volume.divs)
     div_count_dict[volume.id] = (div_count)
-    for fig in volume.figs:
-      fig_list.append("n")
-    fig_count = len(fig_list)
-    fig_count_dict[volume.id] = (fig_count)
+    for div in volume.divs:
+      fig_count = len(div.figs)
+      fig_count_dict[volume.id] = (fig_count)
   
   return render_to_response('volumes.html', {'volumes': volumes, 'div_count_dict': div_count_dict, 'fig_count_dict': fig_count_dict}, context_instance=RequestContext(request))
 
@@ -130,6 +134,16 @@ def volume_xml(request, vol_id):
   return HttpResponse(tei_xml, mimetype='application/xml')
 
 def illustrations(request):
+  #Using separate queries for volumes and figures
+  figures = Figure.objects.all()
+  volumes = Volume_List.objects.only('id', 'head', 'docDate', 'figs').order_by('id')
+  for fig in figures:
+    vol_id = fig.vol_id
+    fig_name = str(fig.url).rstrip(".jpg")
+    div_data = [fig.vol, fig.issue, fig.pages, fig.date]
+
+'''
+  #Query only for the volumes
   volumes = Volume_List.objects.only('id', 'head', 'docDate', 'divs', 'figs').order_by('id')
   div_count_dict = {}
   fig_count_dict = {}
@@ -150,8 +164,16 @@ def illustrations(request):
       figpage = fig.pages
       figdate = fig.date
       fig_list.append(figname)
+      #Dictionary to store results; list of lists will only return last result in the query.
       fig_url_dict[figname] = (volume.id, fighead, figvol, figissue, figpage, figdate)
     fig_count = len(fig_list)
     fig_count_dict[volume.id] = (fig_count)
- 
-  return render_to_response('illustrations.html', {'volumes': volumes, 'div_count_dict': div_count_dict, 'fig_count_dict': fig_count_dict, 'fig_url_dict': fig_url_dict}, context_instance=RequestContext(request))
+'''
+  return render_to_response('illustrations.html', {'volumes':volumes, 'figures':figures, 'vol_id':vol_id, 'fig_name':fig_name, 'div_data':div_data}, context_instance=RequestContext(request))
+
+def illus_subj(request):
+  "View list of subjects for illustrations"
+  groups = InterpGroup.objects.only('items', 'name')
+  return render_to_response('subjects.html', {'groups' : groups}, context_instance=RequestContext(request))
+
+  

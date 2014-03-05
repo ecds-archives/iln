@@ -6,7 +6,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib import admin
 admin.autodiscover()
 
-from iln_app.views import index, introduction, bibliography, about, links, searchform, article_display, volumes, volume_display, illustrations, volume_xml
+from iln_app.views import index, introduction, bibliography, about, links, searchform, article_display, volumes, volume_display, illustrations, volume_xml, illus_subj
 
 urlpatterns = patterns('iln_app.views',
     url(r'^$', 'index', name='index'),
@@ -20,6 +20,7 @@ urlpatterns = patterns('iln_app.views',
     url(r'^volume/(?P<vol_id>[^/]+)/xml$', 'volume_xml', name='volume_xml'),
     url(r'^volumes$', 'volumes', name='volumes'),
     url(r'^illustrations$', 'illustrations', name='illustrations'),
+    url(r'^illus-subj$', 'illus_subj', name='illus_subj'),
     )
    
 

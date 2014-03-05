@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
+{% block meta %}
+{# Dublin Core metadata for this article #}
+{% with div as dc_fields %}{% include 'dc_meta.html' %}{% endwith %}
+{% endblock %}
+
 {% block title %}Browse - Article{% endblock %}
 
 {% block content %}
@@ -19,17 +24,7 @@
   valign="top"><font size="-1">{{div.nextdiv_vol}}, {{div.nextdiv_issue}}, {{div.nextdiv_pages}} ({{div.nextdiv_extent}})</font></td></tr> 
   <tr><th>Article List for: </th><td><a href={% url "volume_display" div.volume_id %}>{{div.volume_title}}</a></td><td/></tr></table>
 
-
-<h2>Search Entire Text</h2>
-
-<form name="ilnquery" action={% url "searchform" %} method="get">
-<table class="searchform" border="0">
-<tr><th>Keyword</th><td class="input"><input type="text" size="40" name="keyword"></td></tr>
-<tr><th>Title</th><td class="input"><input type="text" size="40" name="title"></td></tr>
-<tr><th>Article Date</th><td class="input"><input type="text" size="40" name="article_date"></td></tr>
-<tr><td></td><td><input type="submit" value="Submit"> <input type="reset" value="Reset"></td></tr>
-</table>
-</form>
+{% include "search_text.html" %}
 
 </div>
 

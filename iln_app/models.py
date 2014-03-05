@@ -10,16 +10,17 @@ from eulxml.xmlmap.dc import DublinCore
 from eulxml.xmlmap.fields import StringField, NodeField, StringListField, NodeListField, Field
 from eulxml.xmlmap.teimap import Tei, TeiDiv, _TeiBase, TEI_NAMESPACE, xmlmap, TeiInterpGroup, TeiInterp
 
-class Fields(_TeiBase):
+
+class Fields(XmlModel, Tei):
     ROOT_NAMESPACES = {
         'tei' : TEI_NAMESPACE,
         'xml' : 'http://www.w3.org/XML/1998/namespace'}
     id = StringField('@xml:id')
     head = StringField('tei:head')
+    img_head = StringField('//tei:figure/tei:head')
     vol = StringField('tei:bibl/tei:biblScope[@type="volume"]')
     issue = StringField('tei:bibl/tei:biblScope[@type="issue"]')
     pages = StringField('tei:bibl/tei:biblScope[@type="pages"]')
-    url = StringField('tei:graphic/@url')
     date = StringField('tei:bibl/tei:date')
     type = StringField("@type")
     extent = StringField('tei:bibl/tei:extent')
@@ -28,8 +29,8 @@ class Volume_List(XmlModel, Tei):
     ROOT_NAMESPACES = {'tei' : TEI_NAMESPACE}
     objects = Manager('/tei:TEI')
     divs = NodeListField('//tei:div2', Fields)
-    div_heads = NodeListField('//tei:div2/tei:head', 'self')
     figs = NodeListField('//tei:figure', Fields)
+    div_heads = NodeListField('//tei:div2/tei:head', 'self')
     id = StringField('//tei:div1/@xml:id')
     head = StringField('//tei:div1/tei:head')
     docDate = StringField('//tei:div1/tei:docDate')
@@ -40,6 +41,7 @@ class Volume(XmlModel, Tei):
     objects = Manager('//tei:div1')
     divs = NodeListField('//tei:div2', Fields)
     head = StringField('tei:head')
+    id = StringField('@xml:id')
     
 
 class Article(XmlModel, TeiDiv):
@@ -48,13 +50,23 @@ class Article(XmlModel, TeiDiv):
     article = NodeField("//tei:div2", "self")
     id = StringField('@xml:id')
     head = StringField('tei:head')
+    title = StringField('tei:bibl/tei:title')
     vol = StringField('tei:bibl/tei:biblScope[@type="volume"]')
     issue = StringField('tei:bibl/tei:biblScope[@type="issue"]')
     pages = StringField('tei:bibl/tei:biblScope[@type="pages"]')
     date = StringField('tei:bibl/tei:date')
+    identifier_ark = StringField('tei:bibl/tei:idno')
 
     author = StringField("tei:byline//tei:sic")
     type = StringField("@type")
+
+    #header = NodeField('ancestor::tei:TEI/tei:teiHeader', Volume_List)
+    contributor = NodeField('ancestor::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:respStmt', Volume_List)
+    publisher = NodeField('ancestor::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:publisher', Volume_List)
+    rights = NodeField('ancestor::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability/tei:p', Volume_List)
+    issued_date = NodeField('ancestor::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:date', Volume_List)
+    site_url = 'http://beck.library.emory.edu/iln'
+    series = NodeField('ancestor::tei:TEI/tei:teiHeader/tei:fileDesc/tei:seriesStmt/tei:title', Volume_List)
 
     # These variables duplicate the paths above.  Can another model help reduce code?
     volume = NodeField('ancestor::tei:div1', Volume)
@@ -79,12 +91,22 @@ class Article(XmlModel, TeiDiv):
     ana = StringField("@ana", "self") 
    
 class Figure(XmlModel, Tei):
-    ROOT_NAMESPACES = {'tei' : TEI_NAMESPACE}
+    ROOT_NAMESPACES = {
+        'tei' : TEI_NAMESPACE,}
     objects = Manager('//tei:figure')
-    figure = NodeField("//tei:figure", "self")
     head = StringField('tei:head')
     url = StringField('tei:graphic/@url')
     ana = StringField('tei:graphic/@ana')
     width = StringField('tei:graphic/@width')
     height = StringField('tei:graphic/@height')
-    volume_id = StringField('ancestor::tei:div1/@xml:id', Volume)
+    vol = NodeField('ancestor::tei:div1/@xml:id', Volume)
+    issue = NodeField('ancestor::tei:div2/tei:bibl/tei:biblScope[@type="issue"]', 'self')
+    pages = NodeField('ancestor::tei:div2/tei:bibl/tei:biblScope[@type="pages"]', 'self')
+    date = NodeField('ancestor::tei:div2/tei:bibl/tei:date', 'self')
+    vol_id = NodeField('ancestor::tei:div1/@xml:id', 'self')
+
+class InterpGroup(XmlModel, Tei):
+    ROOT_NAMESPACES = {'tei' : TEI_NAMESPACE}
+    objects = Manager('//tei:interpGrp')
+    items = NodeListField('tei:interp', Fields)
+    name = StringField('@type', 'self')
