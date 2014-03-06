@@ -7,8 +7,7 @@
 <div class="content">
 
 <h2>Search Results</h2>
-
- <p><b>Search results for texts where:</b></p>
+ <p><b>Search results for {% if scope == text %}texts{% else %}illustrations{% endif %} where:</b></p>
  <ul class='searchopts'>
   {% if keyword %} 
   <li>document contains keyword(s) '{{keyword}}'</li>

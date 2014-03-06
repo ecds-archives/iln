@@ -55,6 +55,8 @@ class Article(XmlModel, TeiDiv):
     issue = StringField('tei:bibl/tei:biblScope[@type="issue"]')
     pages = StringField('tei:bibl/tei:biblScope[@type="pages"]')
     date = StringField('tei:bibl/tei:date')
+    figs = StringListField('//tei:figure', 'self')
+    fig_date = StringListField('//tei:figure/tei:date', 'self')
     identifier_ark = StringField('tei:bibl/tei:idno')
 
     author = StringField("tei:byline//tei:sic")
