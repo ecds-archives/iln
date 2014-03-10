@@ -59,10 +59,12 @@ def searchform(request, scope=None):
             search_opts['date__contains'] = '%s' % form.cleaned_data['illustration_date']
 
         if scope == 'text':
-          items = Article.objects.only("id", "head", "vol", "issue", "pages", "date", "bib", "volume_id").filter(**search_opts)
+          items = Article.objects.only("id", "head", "vol", "issue", "pages", "date", "bib", "volume_id").filter(**search_opts).filter('-highlight').order_by('-fulltext_score')
         if scope == 'illustrations':
-          items = Figure.objects.only("id", "head", "vol", "issue", "pages", "date").filter(**search_opts)
+          items = Figure.objects.only("id", "head", "vol", "issue", "pages", "date").filter(**search_opts).order_by('-fulltext_score')
 
+        
+        
         items_paginator = Paginator(items, number_of_results)
         
         try:
@@ -78,6 +80,7 @@ def searchform(request, scope=None):
         context['scope'] = scope
         context['items'] = items
         context['items_paginated'] = items_page
+        context['items_count'] = items_page.paginator.count
         context['keyword'] = form.cleaned_data['keyword']
         context['title'] = form.cleaned_data['title']
         context['article_date'] = form.cleaned_data['article_date']
