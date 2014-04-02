@@ -10,6 +10,7 @@ class SearchForm(forms.Form):
     title = forms.CharField(required=False)
     article_date = forms.CharField(required=False)
     illustration_date = forms.CharField(required=False)
+    illustration_subject = forms.CharField(required=False)
        
     def clean(self):
         """Custom form validation."""
@@ -19,6 +20,7 @@ class SearchForm(forms.Form):
         title = cleaned_data.get('title')
         article_date = cleaned_data.get('article_date')
         illustration_date = cleaned_data.get('illustration_date')
+        illustration_subject = cleaned_data.get('illustration_subject')
         
         "Validate at least one term has been entered"
         if not keyword and not title and not article_date and not illustration_date:
@@ -26,6 +28,7 @@ class SearchForm(forms.Form):
             del cleaned_data['title']
             del cleaned_data['article_date']
             del cleaned_data['illustration_date']
+            del cleaned_data['illustration_subject']
             
             raise forms.ValidationError("Please enter search terms.")
 

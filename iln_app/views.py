@@ -10,7 +10,7 @@ from django.http import HttpResponse, Http404
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.template import RequestContext
 
-from iln_app.models import Volume_List, Volume, Article, Fields, Figure, InterpGroup
+from iln_app.models import Volume_List, Volume, Article, Fields, Figure, InterpGroup, Subject
 from iln_app.forms import SearchForm
 
 from eulxml.xmlmap.core import load_xmlobject_from_file
@@ -55,36 +55,35 @@ def searchform(request, scope=None):
             search_opts['head__fulltext_terms'] = '%s' % form.cleaned_data['title']
         if 'article_date' in form.cleaned_data and form.cleaned_data['article_date']:
             search_opts['date__contains'] = '%s' % form.cleaned_data['article_date']
-        if 'illustration_date' in form.cleaned_data and form.cleaned_data['article_date']:
+        if 'illustration_date' in form.cleaned_data and form.cleaned_data['illustration_date']:
             search_opts['date__contains'] = '%s' % form.cleaned_data['illustration_date']
 
         if scope == 'text':
-          items = Article.objects.only("id", "head", "vol", "issue", "pages", "date", "bib", "volume_id").filter(**search_opts).filter('-highlight').order_by('-fulltext_score')
+          items = Article.objects.only("id", "head", "vol", "issue", "pages", "date", "type", "extent", "volume_id").also('fulltext_score').filter(**search_opts).filter('-highlight').order_by('-fulltext_score')
         if scope == 'illustrations':
-          items = Figure.objects.only("id", "head", "vol", "issue", "pages", "date").filter(**search_opts).order_by('-fulltext_score')
-
+          items = Figure.objects.only("id", "head", "article__id", "article__vol", "article__issue", "article__pages", "article__date", "article__type", "article__extent", "url").filter(**search_opts).order_by('-fulltext_score')
         
-        
-        items_paginator = Paginator(items, number_of_results)
-        
+        searchform_paginator = Paginator(items, number_of_results)
+                
         try:
             page = int(request.GET.get('page', '1'))
         except ValueError:
             page = 1
         # If page request (9999) is out of range, deliver last page of results.
         try:
-            items_page = items_paginator.page(page)
+            searchform_page = searchform_paginator.page(page)
         except (EmptyPage, InvalidPage):
-            items_page = items_paginator.page(paginator.num_pages)
+            searchform_page = searchform_paginator.page(paginator.num_pages)
 
         context['scope'] = scope
         context['items'] = items
-        context['items_paginated'] = items_page
-        context['items_count'] = items_page.paginator.count
+        context['items_paginated'] = searchform_page
+        context['items_count'] = searchform_page.paginator.count
         context['keyword'] = form.cleaned_data['keyword']
         context['title'] = form.cleaned_data['title']
         context['article_date'] = form.cleaned_data['article_date']
         context['illustration_date'] = form.cleaned_data['illustration_date']
+        context['search_opts'] = search_opts
            
         response = render_to_response('search_results.html', context, context_instance=RequestContext(request))                
     else:
@@ -111,24 +110,14 @@ def article_display(request, div_id):
         raise Http404
 
 def volumes(request):
-  volumes = Volume_List.objects.only('id', 'head', 'docDate', 'divs').order_by('id')
-  div_count_dict = {}
-  fig_count_dict = {}
-  for volume in volumes:
-    div_list = []
-    fig_list = []
-    div_count = len(volume.divs)
-    div_count_dict[volume.id] = (div_count)
-    for div in volume.divs:
-      fig_count = len(div.figs)
-      fig_count_dict[volume.id] = (fig_count)
-  
-  return render_to_response('volumes.html', {'volumes': volumes, 'div_count_dict': div_count_dict, 'fig_count_dict': fig_count_dict}, context_instance=RequestContext(request))
+  volumes = Volume_List.objects.only('id', 'head', 'docDate', 'divs').order_by('id')  
+  return render_to_response('volumes.html', {'volumes': volumes}, context_instance=RequestContext(request))
 
 def volume_display(request, vol_id):
   "Display the contents of a single volume."
   volume = Volume.objects.get(id__exact=vol_id)
-  return render_to_response('volume_display.html', {'volume': volume,}, context_instance=RequestContext(request))
+  body = volume.xsl_transform(filename=os.path.join(settings.BASE_DIR, '..', 'iln_app', 'xslt', 'volume.xsl'))
+  return render_to_response('volume_display.html', {'volume': volume, 'body' : body.serialize()}, context_instance=RequestContext(request))
 
 def volume_xml(request, vol_id):
   "Display the xml of a single volume."
@@ -140,19 +129,48 @@ def volume_xml(request, vol_id):
   return HttpResponse(tei_xml, mimetype='application/xml')
 
 def illustrations(request):
-  #Using separate queries for volumes and figures
-  figures = Figure.objects.all()
   volumes = Volume_List.objects.only('id', 'head', 'docDate', 'figs').order_by('id')
-  for fig in figures:
-    vol_id = fig.vol_id
-    fig_name = str(fig.url).rstrip(".jpg")
-    div_data = [fig.vol, fig.issue, fig.pages, fig.date]
+  figures = Figure.objects.also('volume__id', 'article__id', 'article__title', 'article__vol', 'article__issue', 'article__pages', 'article__date').all()
 
-  return render_to_response('illustrations.html', {'volumes':volumes, 'figures':figures, 'vol_id':vol_id, 'fig_name':fig_name, 'div_data':div_data}, context_instance=RequestContext(request))
+  return render_to_response('illustrations.html', {'volumes':volumes, 'figures':figures}, context_instance=RequestContext(request))
+
+def illustration_display(request, fig_url):
+  try:
+    figure = Figure.objects.get(url__exact=fig_url)
+  except:
+    raise Http404
+  return render_to_response('illustration_display.html', {'figure': figure,}, context_instance=RequestContext(request))
 
 def illus_subj(request):
   "View list of subjects for illustrations"
   groups = InterpGroup.objects.only('items', 'name')
   return render_to_response('subjects.html', {'groups' : groups}, context_instance=RequestContext(request))
+
+def subject_display(request, subj_id):
+  "View list of illustrations for a subject"
+  subject = Subject.objects.filter(id__exact=subj_id).distinct()
+  response_code = None
+  context = {}
+  number_of_results = 20
+
+  figures = Figure.objects.only("id", "head", "article__id", "article__vol", "article__issue", "article__pages", "article__date", "article__type", "article__extent", "url").filter(ana__contains=subj_id)
+
+  subject_paginator = Paginator(figures, number_of_results)
+  try:
+    page = int(request.GET.get('page', '1'))
+  except ValueError:
+    page = 1
+  # If page request (9999) is out of range, deliver last page of results.
+  try:
+    subject_page = subject_paginator.page(page)
+  except (EmptyPage, InvalidPage):
+    subject_page = subject_paginator.page(paginator.num_pages)
+
+  context['subject'] = subject
+  context['items'] = figures
+  context['items_paginated'] = subject_page
+  context['items_count'] = subject_page.paginator.count
+
+  return render_to_response('subject_display.html', context, context_instance=RequestContext(request))
 
   
