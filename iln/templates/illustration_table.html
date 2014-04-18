@@ -1,0 +1,27 @@
+
+<p>{{ items_count }} match{{items_count|pluralize:"es"}} found</p>
+<p>Click on the title to view the whole article.<br>
+Click on the thumbnail to view the image.</p>
+
+{% for item in items_paginated.object_list %}
+
+<table class="browse"><thead style="font-size:small;"><tr><th class="num">#</th><th>image</th></tr></thead><tbody
+    align="left" valign="top" style="font-size:small;"><tr
+      xmlns:tei="http://www.tei-c.org/ns/1.0" class="item">
+      <td class="num"
+  width="4%">{{forloop.counter|add:items_paginated.start_index|add:-1}}.</td>
+  <td class="item"><a href={% url 'illustration_display' item.url %}   target="_blank"><img
+  src="http://beck.library.emory.edu/iln/image-content/ILN{{item.url|cut:".jpg"}}.gif"
+  alt="view image"
+  title="{{item.article.head}}"/></a></td>
+      <td class="title">
+	<a href="{% url "article_display" item.article.id %}{% if keyword %}?keyword={{keyword}}{% endif %}">{{item.head}}</a><br/>
+  <font size="-1">
+  {{item.article.vol}}, {{item.article.issue}},
+    {{item.article.pages}}. {{item.article.date}} -
+    {{item.article.type}} - ({{item.article.extent}})
+  </font> 
+      </td>
+</table>
+
+{% endfor %}

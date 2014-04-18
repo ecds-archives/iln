@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block head-extras %}{% include "content_head.html" %}{% endblock %}
+
+{% block title %}Browse - Illustrations{% endblock %}
+
+{% block content %}
+
+<div class="content">
+
+<h2>Illustrations by Subject</h2>
+  
+{% for group in groups %}
+  <h4>{{group.name}}</h4>
+  <ul>
+    {% for item in group.items %}
+    <li><a href={% url "subject_display" item.id %}>{{item}}</a></li>
+    {% endfor %}
+  </ul>
+{% endfor %}
+    
+
+  
+</div>
+  
+{% endblock %}

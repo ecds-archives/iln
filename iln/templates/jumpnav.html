@@ -1,0 +1,19 @@
+{% load get_item %}
+
+{% if scope == 'text' %}
+<form align="right" id="jumpnav" action="{% url "search_results" "text" %}">
+{% else %}
+<form align="right" id="jumpnav" action="{% url "search_results" "illustrations" %}">
+{% endif %}
+<select name="page" onchange="submit();">
+  {% for page in items_paginated.paginator.page_range %}
+  <option value="{{page}}" selected="selected">{{ range_lookup|get_item:page }}</option>
+    {% endfor %}
+</select>
+<input name="keyword" type="hidden" value="{{keyword}}">
+<input name="title" type="hidden" value="{{title}}">
+<input name="date" type="hidden" value="{{article_date}}">
+<input name="illustration_date" type="hidden" value="{{illustration_date}}">
+
+</form>
+

@@ -1,0 +1,11 @@
+<h2>Search Illustrations</h2>
+
+<form name="iln-illus-query" action={% url "search_results" "illustrations" %} method="get"> 
+<table class="searchform" border="0">
+<tr><th>Keyword</th><td class="input"><input type="text" size="40" name="keyword"></td></tr>
+<tr><th>Illustration Date</th><td class="input"><input type="text" size="40" name="illustration_date"></td></tr>
+<tr><td></td><td><input type="submit" value="Submit"> <input type="reset" value="Reset"></td></tr>
+</table>
+</form>
+
+<p><a href={% url "illus_subj" %}><h4>View Illustrations by Subject</h4></a></p>

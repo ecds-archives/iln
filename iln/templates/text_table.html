@@ -1,0 +1,18 @@
+<p>{{ items_count }} match{{items_count|pluralize:"es"}} found</p>
+<p>Click on the title to view the whole article.</p>
+
+{% for item in items_paginated.object_list %}
+
+<table class="browse"><thead style="font-size:small;"><tr><th class="hits">Score</th><th class="num">#</th></tr></thead><tbody align="left" valign="top" style="font-size:small;"><tr xmlns:tei="http://www.tei-c.org/ns/1.0" class="item"><td class="hits">{{item.fulltext_score}}</td> 
+<td class="num" width="4%">{{forloop.counter|add:items_paginated.start_index|add:-1}}.</td> 
+<td class="title">
+	<a href="{% url "article_display" item.id %}{% if keyword %}?keyword={{keyword}}{% endif %}">{{item.head}}</a><br/>
+  <font size="-1">
+  {{item.vol}}, {{item.issue}}, {{item.pages}}. {{item.date}} -
+  {{item.type}} - ({{item.extent}})
+  </font> 
+      </td>
+</table>
+
+{% endfor %}
+
