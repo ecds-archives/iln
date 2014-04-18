@@ -7,7 +7,11 @@
 {% endif %}
 <select name="page" onchange="submit();">
   {% for page in items_paginated.paginator.page_range %}
+  {% if page == items_paginated.number %}
   <option value="{{page}}" selected="selected">{{ range_lookup|get_item:page }}</option>
+  {% else %}
+  <option value="{{page}}">{{ range_lookup|get_item:page }}</option>
+  {% endif %}
     {% endfor %}
 </select>
 <input name="keyword" type="hidden" value="{{keyword}}">
