@@ -56,7 +56,7 @@ def searchform(request, scope=None):
         if 'article_date' in form.cleaned_data and form.cleaned_data['article_date']:
             search_opts['date__contains'] = '%s' % form.cleaned_data['article_date']
         if 'illustration_date' in form.cleaned_data and form.cleaned_data['illustration_date']:
-            search_opts['date__contains'] = '%s' % form.cleaned_data['illustration_date']
+            search_opts['article__date__contains'] = '%s' % form.cleaned_data['illustration_date']
 
         if scope == 'text':
           items = Article.objects.only("id", "head", "vol", "issue", "pages", "date", "type", "extent", "volume_id").also('fulltext_score').filter(**search_opts).filter('-highlight').order_by('-fulltext_score')
@@ -75,9 +75,14 @@ def searchform(request, scope=None):
         except (EmptyPage, InvalidPage):
             searchform_page = searchform_paginator.page(paginator.num_pages)
 
+        range_dict = {}
+        for page in searchform_page.paginator.page_range:
+          range_dict[page] = str(searchform_paginator.page(page).start_index()) + ' - ' + str(searchform_paginator.page(page).end_index())
+
         context['scope'] = scope
         context['items'] = items
         context['items_paginated'] = searchform_page
+        context['range_lookup'] = range_dict
         context['items_count'] = searchform_page.paginator.count
         context['keyword'] = form.cleaned_data['keyword']
         context['title'] = form.cleaned_data['title']
@@ -94,6 +99,7 @@ def searchform(request, scope=None):
 
 def article_display(request, div_id):
   "Display the contents of a single article."
+  search_fields = ['keyword', 'title', 'article_date', 'illustration_date']
   if 'keyword' in request.GET:
     search_terms = request.GET['keyword']
     url_params = '?' + urlencode({'keyword': search_terms})

@@ -6,7 +6,7 @@
 {% block content %}
 
 <div class="content">
-  
+ 
 <h2>Search Results</h2>
  <p><b>Search results for {% if scope == 'text' %}texts{% else %}illustrations{% endif %} where:</b></p>
  <ul class='searchopts'>
@@ -29,41 +29,9 @@ You may want to broaden your search or consult the search tips for
   suggestions.</p>
 {% endif %}
  
-<table class="searchnav">
-  <tr>
-      <td width="25%">
-    {% if not items_paginated.has_next %}
-        <a href="?page={{items_paginated.first}}">&lt;&lt;First</a>
-    {% endif %}
-    </td>
-    <td width="25%">
-    {% if items_paginated.has_previous %}
-        <a href="?page={{items_paginated.previous_page_number}}&keyword={{keyword}}&title={{title}}&article_date={{date}}&illustration={{illustration}}&{{illustration_date}}">&lt;Previous</a>
-    {% endif %}
-    </td>
-    {% if items_paginated.has_next %}
-    <td width="25%">
-        <a href="?page={{items_paginated.next_page_number}}&keyword={{keyword}}&title={{title}}&article_date={{date}}&illustration={{illustration}}&{{illustration_date}}">Next&gt;</a>
-    </td>
-    <td width="25%">
-        <a href="?page={{items_paginated.paginator.num_pages}}&keyword={{keyword}}&title={{title}}&article_date={{date}}&illustration={{illustration}}&{{illustration_date}}">Last&gt;&gt;</a>
-    </td>
-    {% endif %}
-  </tr>
-</table>
+{% include "searchnav.html" %}
 
-<form align="right" id="jumpnav" action="{% url "searchform" %}">
-<select name="page" onchange="submit();">
-  {% for page in items_paginated.paginator.page_range %}
-  <option value="{{page}}" selected="selected">{{ items_paginated.start_index }} - {{items_paginated.end_index }}</option>
-    {% endfor %}
-</select>
-<input name="keyword" type="hidden" value="{{keyword}}">
-<input name="title" type="hidden" value="{{title}}">
-<input name="date" type="hidden" value="{{article_date}}">
-<input name="illustration_date" type="hidden" value="{{illustration_date}}">
-<input name="max" type="hidden" value="20">
-</form>
+{% include "jumpnav.html" %}
 
 {% if scope == 'text' %}
 {% include "text_table.html" %}
