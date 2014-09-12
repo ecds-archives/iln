@@ -25,6 +25,6 @@ urlpatterns = patterns('iln_app.views',
     )
    
 if settings.DEBUG:
-  urlpatterns += staticfiles_urlpatterns(
-       url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT } ),
-    )
+  urlpatterns += patterns(
+    url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT } ),
+)
