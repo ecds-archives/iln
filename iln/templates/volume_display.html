@@ -14,22 +14,15 @@
       </style></noscript>  
   
 {{body|safe}}
-
-
 </body>  
-<p/>
+<div class="content">
 <p><b><a href={% url "volume_xml" volume.id %}>View XML for {{volume.head}}</a></b></p>
-     
-<h2>Search Entire Text</h2>
 
-<form name="ilnquery" action={% url "searchform" %} method="get">
-<table class="searchform" border="0">
-<tr><th>Keyword</th><td class="input"><input type="text" size="40" name="keyword"></td></tr>
-<tr><th>Title</th><td class="input"><input type="text" size="40" name="title"></td></tr>
-<tr><th>Article Date</th><td class="input"><input type="text" size="40" name="article_date"></td></tr>
-<tr><td></td><td><input type="submit" value="Submit"> <input type="reset" value="Reset"></td></tr>
-</table>
-</form>
+<div class="downloads">
+  <p><b><a href={% url "send_file" "iln_articles" %}>Download Articles as Plain Text</a></b></p>
+  </div>
+     
+{% include "search_text.html" %}
   
 </div>
   

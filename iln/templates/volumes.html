@@ -18,10 +18,15 @@
 {% for volume in volumes %}
   <p><a href={% url "volume_display" volume.id %}>{{volume.head}}</a><font size="-1">
       - {{volume.docDate}}
-     - ({{volume.divs|length}} Articles,  {{volume.figs|length}} Illustrations)
-    </font></p></body>
+     - ({{volume.divs|length}} Articles,  {{volume.figs|length}}
+  Illustrations)</font>     <span title="Download Text"><a href={% url "send_file" volume.id %}><img src="{{STATIC_URL}}images/text_icon.png" alt="Download Text" width="15" height="15"></a></span></p></body>
 {% endfor %}
 
+<div class="downloads">
+<p><b><a href={% url "send_file" "iln_volumes" %}>Download Volumes as
+  Plain Text</a></b></p>
+  </div>
+  
 {% include "search_text.html" %}
   
 </div>

@@ -3,6 +3,9 @@ import re
 import collections
 from urllib import urlencode
 import logging
+import tempfile, zipfile
+from django.core.servers.basehttp import FileWrapper
+import mimetypes
 
 from django.conf import settings
 from django.shortcuts import render, render_to_response
@@ -111,7 +114,8 @@ def article_display(request, div_id):
     return_fields = ['article', 'prevdiv_id', 'prevdiv_title', 'prevdiv_vol', 'prevdiv_issue', 'prevdiv_pages', 'prevdiv_extent', 'prevdiv_type', 'nextdiv_id', 'nextdiv_title', 'nextdiv_vol', 'nextdiv_issue', 'nextdiv_pages', 'nextdiv_extent', 'nextdiv_type', 'volume_id', 'volume_title', 'head', 'title', 'vol', 'issue', 'pages', 'date', 'identifier_ark', 'contributor', 'publisher', 'rights', 'issued_date', 'series']
     div = Article.objects.only(*return_fields).filter(**filter).get(id=div_id)
     body = div.article.xsl_transform(filename=os.path.join(settings.BASE_DIR, '..', 'iln_app', 'xslt', 'article.xsl'))
-    return render_to_response('article_display.html', {'div': div, 'body' : body.serialize()}, context_instance=RequestContext(request))
+    id = div_id
+    return render_to_response('article_display.html', {'div': div, 'body' : body.serialize(), 'id': id}, context_instance=RequestContext(request))
   except DoesNotExist:
         raise Http404
 
@@ -179,4 +183,17 @@ def subject_display(request, subj_id):
 
   return render_to_response('subject_display.html', context, context_instance=RequestContext(request))
 
-  
+def send_file(request, basename):
+    if basename[3] == '_':
+        extension = '.zip'
+    else:
+        extension = '.txt'
+    filepath = 'static/txt/' + basename + extension
+    filename  = os.path.join(settings.BASE_DIR, filepath )
+    download_name = basename + extension
+    wrapper      = FileWrapper(open(filename))
+    content_type = mimetypes.guess_type(filename)[0]
+    response     = HttpResponse(wrapper,content_type=content_type)
+    response['Content-Length']      = os.path.getsize(filename)    
+    response['Content-Disposition'] = "attachment; filename=%s"%download_name
+    return response

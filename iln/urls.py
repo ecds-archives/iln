@@ -4,7 +4,7 @@ from django.conf import settings
 from django.contrib import admin
 admin.autodiscover()
 
-from iln_app.views import index, introduction, bibliography, about, links, searchform, article_display, volumes, volume_display, illustrations, illustration_display, volume_xml, illus_subj
+from iln_app.views import index, introduction, bibliography, about, links, searchform, article_display, volumes, volume_display, illustrations, illustration_display, volume_xml, illus_subj, send_file
 
 urlpatterns = patterns('iln_app.views',
     url(r'^$', 'index', name='index'),
@@ -22,9 +22,12 @@ urlpatterns = patterns('iln_app.views',
     url(r'^illustration/(?P<fig_url>[^/]+)/$', 'illustration_display', name='illustration_display'),
     url(r'^illus-subj$', 'illus_subj', name='illus_subj'),
     url(r'^illus-subj/(?P<subj_id>[^/]+)/$', 'subject_display', name='subject_display'),
+    url(r'^(?P<basename>[^/]+)/download$', 'send_file', name='send_file'),
+
     )
    
 if settings.DEBUG:
   urlpatterns += patterns(
     url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT } ),
 )
+

@@ -24,6 +24,11 @@
   valign="top"><font size="-1">{{div.nextdiv_vol}}, {{div.nextdiv_issue}}, {{div.nextdiv_pages}} ({{div.nextdiv_extent}})</font></td></tr> 
   <tr><th>Article List for: </th><td><a href={% url "volume_display" div.volume_id %}>{{div.volume_title}}</a></td><td/></tr></table>
 
+<div class="downloads">
+  <p><b><a href={% url "send_file" id %}>Download Article as
+  Plain Text</a></b></p>
+  </div>
+  
 {% include "search_text.html" %}
 
 </div>
