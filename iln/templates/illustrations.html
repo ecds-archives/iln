@@ -14,10 +14,13 @@
       </style><p>Because you do not have Javascript running, you may prefer to browse <a href="volume.php" rel="alternate">volumes</a> separately.</p></noscript>
 
 {% for volume in volumes %}
-  <p>{{volume.head}}</a><font size="-1">
+  <p><a class="toggle" onclick="toggle_ul('list{{ volume.id }}')">
+        <img id="gif_list1" src="http://beck.library.emory.edu/iln/web/images/open.gif" alt="v" style=""></img>
+     </a>
+     <a onclick="toggle_ul('list1')">{{volume.head}}</a><font size="-1">
       - {{volume.docDate}}
      - ({{volume.figs|length}} Illustrations)</font></p>
-
+<div id='list{{ volume.id }}'>
   <table>
   {% for figure in figures %}
   {% if figure.volume.id == volume.id %}
@@ -27,6 +30,7 @@
   title="{{figure.article.head}}"/></a></td>
   <td><p class="caption">{{figure.article.head}}<br><font sixe="-1">{{figure.article.vol}}, {{figure.article.issue}}, {{figure.article.pages}}, {{figure.article.date}}</font></p></td></tr>{% endif %}{% endfor %}
   </table>
+  </div>
 </ul>
  </body>
 {% endfor %}
