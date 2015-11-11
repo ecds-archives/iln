@@ -15,12 +15,12 @@
 
 {% for volume in volumes %}
   <p><a class="toggle" onclick="toggle_ul('list{{ volume.id }}')">
-        <img id="gif_list1" src="http://beck.library.emory.edu/iln/web/images/open.gif" alt="v" style=""></img>
+        <img id="gif_list{{ volume.id }}" src="http://beck.library.emory.edu/iln/web/images/closed.gif" alt="v" style=""></img>
      </a>
-     <a onclick="toggle_ul('list1')">{{volume.head}}</a><font size="-1">
+     <a onclick="toggle_ul('list{{ volume.id }}')">{{volume.head}}</a><font size="-1">
       - {{volume.docDate}}
      - ({{volume.figs|length}} Illustrations)</font></p>
-<div id='list{{ volume.id }}'>
+<div id='list{{ volume.id }}' class='hidden' style='display: none;'>
   <table>
   {% for figure in figures %}
   {% if figure.volume.id == volume.id %}
