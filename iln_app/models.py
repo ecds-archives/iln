@@ -10,7 +10,6 @@ from eulxml.xmlmap.dc import DublinCore
 from eulxml.xmlmap.fields import StringField, NodeField, StringListField, NodeListField, Field
 from eulxml.xmlmap.teimap import Tei, TeiDiv, _TeiBase, TEI_NAMESPACE, xmlmap, TeiInterpGroup, TeiInterp
 
-
 class Fields(XmlModel, Tei):
     ROOT_NAMESPACES = {
         'tei' : TEI_NAMESPACE,
@@ -104,6 +103,7 @@ class Figure(XmlModel, TeiDiv):
     height = StringField('tei:graphic/@height')
     volume = NodeField('ancestor::tei:div1', 'self')
     article = NodeField('ancestor::tei:div2', Article)
+    
 
 class InterpGroup(XmlModel, Tei):
     ROOT_NAMESPACES = {'tei' : TEI_NAMESPACE}

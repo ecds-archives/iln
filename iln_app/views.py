@@ -151,6 +151,20 @@ def illustration_display(request, fig_url):
     raise Http404
   return render_to_response('illustration_display.html', {'figure': figure,}, context_instance=RequestContext(request))
 
+def illustration_display_large(request, fig_url):
+  try:
+    figure = Figure.objects.get(url__exact=fig_url)
+  except:
+    raise Http404
+  return render_to_response('illustration_display_large.html', {'figure': figure,}, context_instance=RequestContext(request))
+
+def illustration_display_full(request, fig_url):
+  try:
+    figure = Figure.objects.get(url__exact=fig_url)
+  except:
+    raise Http404
+  return render_to_response('illustration_display_full.html', {'figure': figure,}, context_instance=RequestContext(request))
+
 def illus_subj(request):
   "View list of subjects for illustrations"
   groups = InterpGroup.objects.only('items', 'name')

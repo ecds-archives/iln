@@ -23,6 +23,8 @@ urlpatterns = patterns('iln_app.views',
     url(r'^illus-subj$', 'illus_subj', name='illus_subj'),
     url(r'^illus-subj/(?P<subj_id>[^/]+)/$', 'subject_display', name='subject_display'),
     url(r'^(?P<basename>[^/]+)/download$', 'send_file', name='send_file'),
+    url(r'^illustrationlarge/(?P<fig_url>[^/]+)/$', 'illustration_display_large', name='illustration_display_large'),
+    url(r'^illustrationfull/(?P<fig_url>[^/]+)/$', 'illustration_display_full', name='illustration_display_full'),
 
     )
    

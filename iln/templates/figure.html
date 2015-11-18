@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block head-extras %}{% include "content_head.html" %}{% endblock %}
+
+{% block title %}Illustration - Figure{% endblock %}
+
+{% block content %}
+
+
+
+<img
+  src="http://beck.library.emory.edu/iln/image-content/ILN{{figure.url}}"
+  alt="view image"
+  title="{{figure.article.head}}"/>
+  <table>
+  {% for figure in figures %}
+  {% if figure.volume.id == volume.id %}
+  <tr><td class="figure"><a href={% url 'illustration_display' figure.url %}   target="_blank"><img
+  src="http://beck.library.emory.edu/iln/image-content/ILN{{figure.url|cut:".jpg"}}.gif"
+  alt="view image"
+  title="{{figure.article.head}}"/></a></td>
+  <td><p class="caption">{{figure.article.head}}<br><font sixe="-1">{{figure.article.vol}}, {{figure.article.issue}}, {{figure.article.pages}}, {{figure.article.date}}</font></p></td></tr>{% endif %}{% endfor %}
+  </table>
+
+
+
+{% endblock %}

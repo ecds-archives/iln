@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block head-extras %}
+{% include "content_head.html" %}
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  <script type="text/javascript" src="static/openseadragon/openseadragon.min.js"></script>
+  <script type="text/javascript" src="static/js/deepzoom.js"></script>
+  {% include 'book-page.js' %}
+{% endblock %}
+
+
+{% block title %}Illustrations - Figure{% endblock %}
+{% block content %}
+
+<div class="content">
+
+<div class="centering text-center">
+
+
+
+<h2>Figure - {{figure.head}}</h2><?xml version="1.0"?>
+<body onload="load_status(304, 'ILN-figure')" onunload="store_status(304, 'ILN-figure')"><noscript><i>Note: This site works best with Javascript enabled.</i><style type="text/css">
+	ul.contents { display: block } 
+        img.javascript { display: none }
+      </style><p>Because you do not have Javascript running, you may prefer to browse <a href="volume.php" rel="alternate">volumes</a> separately.</p></noscript>
+
+
+</div>
+</div>
+
+<br><br>
+    <article class="carousel page">
+
+            <div class="container in-page-controls">
+                <div id="view-toggle" class="col-sm-4 pull-right">
+
+                    <div id="deepzoom-controls" class="visible">
+                        <div class="btn-group">
+                            <a id="dz-zoom-in" alt="Zoom In" title="Zoom In" href="{% url 'illustration_display_large' figure.url %}" class="btn"><span class="glyphicon glyphicon-plus"></span></a>
+
+                            <a id="dz-zoom-out" alt="Zoom Out" title="Zoom Out" href="{% url 'illustration_display' figure.url %}" class="btn"><span class="glyphicon glyphicon-minus"></span></a>
+
+                            <a id="dz-fs" alt="Fullscreen Mode" title="Fullscreen Mode" href="{% url 'illustration_display_full' figure.url %}" class="btn"><span class="glyphicon glyphicon-fullscreen"></span></a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <div id="zoom-page" class="active">
+                <div class="page">
+                    <div class="content">
+                        <section class="inner">
+                          <img class="page-image" src="http://beck.library.emory.edu/iln/image-content/ILN{{figure.url}}"/>
+                        </section></div>
+                  </div>
+            </div>
+        </div>
+        </article>
+
+{% endblock %}

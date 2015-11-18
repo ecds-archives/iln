@@ -7,3 +7,4 @@ ply
 -e git://github.com/emory-libraries/eulexistdb.git#egg=eulexistdb
 -e git://github.com/emory-libraries/eulcommon.git#egg=eulcommon
 django-bootstrap3
+-e git://github.com/openzoom/deepzoom.py.git#egg=deepzoom
