@@ -17,12 +17,12 @@
 
 <div class="content">
   <table width="100%">
-  <tr><th>Previous: </th><td><a href={% url "article_display" div.prevdiv_id %}>{{div.prevdiv_title}}</a></td><td>{{div.prevdiv_type}}</td><td
-  valign="top"><font size="-1">{{div.prevdiv_vol}},
-  {{div.prevdiv_issue}}, {{div.prevdiv_pages}} ({{div.prevdiv_extent}})</font></td></tr>
-  <tr><th>Next: </th><td><a href={% url "article_display" div.nextdiv_id %}>{{div.nextdiv_title}}</a></td><td>{{div.nextdiv_type}}</td><td
-  valign="top"><font size="-1">{{div.nextdiv_vol}}, {{div.nextdiv_issue}}, {{div.nextdiv_pages}} ({{div.nextdiv_extent}})</font></td></tr> 
-  <tr><th>Article List for: </th><td><a href={% url "volume_display" div.volume_id %}>{{div.volume_title}}</a></td><td/></tr></table>
+  <tr><th>Previous: </th><td><a href={% url "article_display" next.prevdiv_id %}>{{next.prevdiv_title}}</a></td><td>{{next.prevdiv_type}}</td><td
+  valign="top"><font size="-1">{{next.prevdiv_vol}},
+  {{next.prevdiv_issue}}, {{next.prevdiv_pages}} ({{next.prevdiv_extent}})</font></td></tr>
+  <tr><th>Next: </th><td><a href={% url "article_display" next.nextdiv_id %}>{{next.nextdiv_title}}</a></td><td>{{next.nextdiv_type}}</td><td
+  valign="top"><font size="-1">{{div.nextdiv_vol}}, {{div.nextdiv_issue}}, {{next.nextdiv_pages}} ({{next.nextdiv_extent}})</font></td></tr> 
+  <tr><th>Article List for: </th><td><a href={% url "volume_display" next.volume_id %}>{{next.volume_title}}</a></td><td/></tr></table>
 
 <div class="downloads">
   <p><b><a href={% url "send_file" id %}>Download Article as
