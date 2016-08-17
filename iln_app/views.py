@@ -117,25 +117,47 @@ def searchform(request, scope=None):
 
     return response
 
+#def article_display(request, div_id):
+#  "Display the contents of a single article."
+#  search_fields = ['keyword', 'title', 'article_date', 'illustration_date']
+#  if 'keyword' in request.GET:
+#    search_terms = request.GET['keyword']
+#    url_params = '?' + urlencode({'keyword': search_terms})
+#    filter = {'highlight': search_terms}    
+#  else:
+#    url_params = ''
+#    filter = {}
+#  try:
+#    #return_fields = []
+#    next = Article.objects.only('article', 'prevdiv_id', 'prevdiv_title', 'prevdiv_vol', 'prevdiv_issue', 'prevdiv_pages', 'prevdiv_extent', 'prevdiv_type', 'nextdiv_id', 'nextdiv_title', 'nextdiv_vol', 'nextdiv_issue', 'nextdiv_pages', 'nextdiv_extent', 'nextdiv_type', 'volume_id', 'volume_title', 'head', 'title', 'vol', 'issue', 'pages', 'date', 'identifier_ark', 'contributor', 'publisher', 'rights', 'issued_date', 'series').filter(**filter).get(id=div_id)
+#    div = Article.objects.all().filter(**filter).get(id=div_id)
+#    body = div.article.xsl_transform(filename=os.path.join(settings.BASE_DIR, '..', 'iln_app', 'xslt', 'article.xsl'))
+#    id = div_id
+#    return render_to_response('article_display.html', {'div': div, 'next': next, 'body' : body.serialize(), 'id': id}, context_instance=RequestContext(request))
+#  except DoesNotExist:
+#        raise Http404
+
 def article_display(request, div_id):
   "Display the contents of a single article."
   search_fields = ['keyword', 'title', 'article_date', 'illustration_date']
   if 'keyword' in request.GET:
     search_terms = request.GET['keyword']
     url_params = '?' + urlencode({'keyword': search_terms})
-    filter = {'highlight': search_terms}    
+    filter = {'highlight': search_terms}
   else:
     url_params = ''
     filter = {}
   try:
-    #return_fields = []
-    next = Article.objects.only('article', 'prevdiv_id', 'prevdiv_title', 'prevdiv_vol', 'prevdiv_issue', 'prevdiv_pages', 'prevdiv_extent', 'prevdiv_type', 'nextdiv_id', 'nextdiv_title', 'nextdiv_vol', 'nextdiv_issue', 'nextdiv_pages', 'nextdiv_extent', 'nextdiv_type', 'volume_id', 'volume_title', 'head', 'title', 'vol', 'issue', 'pages', 'date', 'identifier_ark', 'contributor', 'publisher', 'rights', 'issued_date', 'series').filter(**filter).get(id=div_id)
+    #return_fields = ['article', 'prevdiv_id', 'prevdiv_title', 'prevdiv_vol', 'prevdiv_issue', 'prevdiv_pages', 'prevdiv_extent', 'prevdiv_type', 'nextdiv_id', 'nextdiv_title', 'nextdiv_vol', 'nextdiv_issue', 'nextdiv_pages', 'nextdiv_extent', 'nextdiv_type', 'volume_id', 'volume_title', 'head', 'title', 'vol', 'issue', 'pages', 'date', 'identifier_ark', 'contributor', 'publisher', 'rights', 'issued_date', 'series').filter(**filter).get(id=div_id)
+    div9 = Article.objects.only('article', 'prevdiv_id', 'prevdiv_title', 'prevdiv_vol', 'prevdiv_issue', 'prevdiv_pages', 'prevdiv_extent', 'prevdiv_type', 'nextdiv_id', 'nextdiv_title', 'nextdiv_vol', 'nextdiv_issue', 'nextdiv_pages', 'nextdiv_extent', 'nextdiv_type', 'volume_id', 'volume_title', 'head', 'title', 'vol', 'issue', 'pages', 'date', 'identifier_ark', 'contributor', 'publisher', 'rights', 'issued_date', 'series').filter(**filter).get(id=div_id)
     div = Article.objects.all().filter(**filter).get(id=div_id)
     body = div.article.xsl_transform(filename=os.path.join(settings.BASE_DIR, '..', 'iln_app', 'xslt', 'article.xsl'))
     id = div_id
-    return render_to_response('article_display.html', {'div': div, 'next': next, 'body' : body.serialize(), 'id': id}, context_instance=RequestContext(request))
+    return render_to_response('article_display.html', {'div': div, 'div9': div9, 'body' : body.serialize(), 'id': id}, context_instance=RequestContext(request))
   except DoesNotExist:
         raise Http404
+
+
 
 def volumes(request):
   volumes = Volume_List.objects.only('id', 'head', 'docDate', 'divs').order_by('id')  
