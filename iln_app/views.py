@@ -12,6 +12,7 @@ from django.shortcuts import render, render_to_response
 from django.http import HttpResponse, Http404
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.template import RequestContext
+from django.contrib import messages
 
 from iln_app.models import Volume_List, Volume, Article, Fields, Figure, InterpGroup, Subject
 from iln_app.forms import SearchForm
@@ -21,6 +22,7 @@ from eulxml.xmlmap.teimap import Tei, TeiDiv, _TeiBase, TEI_NAMESPACE, xmlmap
 from eulcommon.djangoextras.http.decorators import content_negotiation
 from eulexistdb.query import escape_string
 from eulexistdb.exceptions import DoesNotExist, ReturnedMultiple
+from eulexistdb.db import ExistDBException
 
 logger = logging.getLogger(__name__)
 
@@ -44,6 +46,7 @@ def links(request):
   return render_to_response('links.html', {'body' : body.serializeDocument()}, context_instance=RequestContext(request))
 
 def searchform(request, scope=None):
+    query_error = False
     "Search by articles and illustrations by keyword/title/date"
     form = SearchForm(request.GET)
     response_code = None
@@ -60,44 +63,58 @@ def searchform(request, scope=None):
             search_opts['date__contains'] = '%s' % form.cleaned_data['article_date']
         if 'illustration_date' in form.cleaned_data and form.cleaned_data['illustration_date']:
             search_opts['article__date__contains'] = '%s' % form.cleaned_data['illustration_date']
-
-        if scope == 'text':
-          items = Article.objects.only("id", "head", "vol", "issue", "pages", "date", "type", "extent", "volume_id").also('fulltext_score').filter(**search_opts).filter('-highlight').order_by('-fulltext_score')
-        if scope == 'illustrations':
-          items = Figure.objects.only("id", "head", "article__id", "article__vol", "article__issue", "article__pages", "article__date", "article__type", "article__extent", "url").filter(**search_opts).order_by('-fulltext_score')
-        
-        searchform_paginator = Paginator(items, number_of_results)
-                
+ 
         try:
-            page = int(request.GET.get('page', '1'))
-        except ValueError:
-            page = 1
-        # If page request (9999) is out of range, deliver last page of results.
-        try:
-            searchform_page = searchform_paginator.page(page)
-        except (EmptyPage, InvalidPage):
-            searchform_page = searchform_paginator.page(paginator.num_pages)
+            if scope == 'text':
+              items = Article.objects.only("id", "head", "vol", "issue", "pages", "date", "type", "extent", "volume_id").also('fulltext_score').filter(**search_opts).filter('-highlight').order_by('-fulltext_score')
+            if scope == 'illustrations':
+              items = Figure.objects.only("id", "head", "article__id", "article__vol", "article__issue", "article__pages", "article__date", "article__type", "article__extent", "url").filter(**search_opts).order_by('-fulltext_score')
+            
+            searchform_paginator = Paginator(items, number_of_results)
+                    
+            try:
+                page = int(request.GET.get('page', '1'))
+            except ValueError:
+                page = 1
+            # If page request (9999) is out of range, deliver last page of results.
+            try:
+                searchform_page = searchform_paginator.page(page)
+            except (EmptyPage, InvalidPage):
+                searchform_page = searchform_paginator.page(paginator.num_pages)
 
-        range_dict = {}
-        for page in searchform_page.paginator.page_range:
-          range_dict[page] = str(searchform_paginator.page(page).start_index()) + ' - ' + str(searchform_paginator.page(page).end_index())
+            range_dict = {}
+            for page in searchform_page.paginator.page_range:
+              range_dict[page] = str(searchform_paginator.page(page).start_index()) + ' - ' + str(searchform_paginator.page(page).end_index())
 
-        context['scope'] = scope
-        context['items'] = items
-        context['items_paginated'] = searchform_page
-        context['range_lookup'] = range_dict
-        context['items_count'] = searchform_page.paginator.count
-        context['keyword'] = form.cleaned_data['keyword']
-        context['title'] = form.cleaned_data['title']
-        context['article_date'] = form.cleaned_data['article_date']
-        context['illustration_date'] = form.cleaned_data['illustration_date']
-        context['search_opts'] = search_opts
+            context['scope'] = scope
+            context['items'] = items
+            context['items_paginated'] = searchform_page
+            context['range_lookup'] = range_dict
+            context['items_count'] = searchform_page.paginator.count
+            context['keyword'] = form.cleaned_data['keyword']
+            context['title'] = form.cleaned_data['title']
+            context['article_date'] = form.cleaned_data['article_date']
+            context['illustration_date'] = form.cleaned_data['illustration_date']
+            context['search_opts'] = search_opts
            
-        response = render_to_response('search_results.html', context, context_instance=RequestContext(request))                
+            response = render_to_response('search_results.html', context, context_instance=RequestContext(request))                
+
+        except ExistDBException as e:
+            query_error = True
+            if 'Cannot parse' in e.message():
+                messages.error(request, 'Your search query could not be parsed.  ' + 'Please revise your search and try again.')
+            else:
+                # generic error message for any other exception
+                messages.error(request, 'There was an error processing your search.')
+            response = render(request, 'search.html',{'searchform': form, 'request': request})
+                      
     else:
         response = render(request, 'search.html', {"searchform": form})       
     if response_code is not None:
         response.status_code = response_code
+    if query_error:
+        response.status_code = 400
+
     return response
 
 def article_display(request, div_id):
